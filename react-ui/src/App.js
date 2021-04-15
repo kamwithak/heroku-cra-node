@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import Typist from 'react-text-typist';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
   const [message, setMessage] = useState(null);
-  const [string, setString] = useState('-1');
   const [isFetching, setIsFetching] = useState(false);
 
   const fetchData = useCallback(() => {
@@ -24,41 +24,31 @@ function App() {
       })
   }, ['/api']);
 
-  const fetchString = useCallback(() => {
-    fetch('/message')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`status ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(response => setString(response.message))
-      .catch(e => {
-        setMessage(`API call failed: ${e}`);
-      })
-  }, ['/message']);
-
   useEffect(() => {
     setIsFetching(true);
     fetchData();
-    fetchString();
-  }, [fetchData, fetchString]);
+  }, [fetchData]);
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        { process.env.NODE_ENV === 'production' ?
+        {/* { process.env.NODE_ENV === 'production' ?
             <p>
               This is a production build from create-react-app.
             </p>
           : <p>
               Edit <code>src/App.js</code> and save to reload.
             </p>
-        }
+        } */}
+        <Typist
+          sentences={['You only live once....', 'So why live for tomorrow?', 'Go buy ETH and relax Hasan!']}
+          loop={!true}
+          typingSpeed={60}
+        />
         <p>{'« '}<strong>
           {isFetching
-            ? 'Fetching message from API'
+            ? '...'
             : message}
         </strong>{' »'}</p>
         <p><a
@@ -75,7 +65,6 @@ function App() {
         >
           Learn React
         </a></p>
-        <p>{string}</p>
       </header>
     </div>
   );

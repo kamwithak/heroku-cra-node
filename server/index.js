@@ -28,12 +28,7 @@ if (!isDev && cluster.isMaster) {
   // Answer API requests.
   app.get('/api', function (req, res) {
     res.set('Content-Type', 'application/json');
-    res.send('{"message":"Hello from the custom server!"}');
-  });
-
-  app.get('/message', function (req, res) {
-    res.set('Content-Type', 'application/json');
-    res.send('{"message":"This is a message from the back-end! yooohooo ~"}');
+    res.send('{"message":"Payload received from the back-end"}');
   });
   
   // All remaining requests return the React app, so it can handle routing.
