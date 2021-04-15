@@ -32,7 +32,8 @@ if (!isDev && cluster.isMaster) {
   });
 
   app.get('/message', function (req, res) {
-    res.send('string pushed from the back-end');
+    res.set('Content-Type', 'application/json');
+    res.send('{"message":"This is a message from the back-end! yooohooo ~"}');
   });
   
   // All remaining requests return the React app, so it can handle routing.

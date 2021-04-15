@@ -30,10 +30,9 @@ function App() {
         if (!response.ok) {
           throw new Error(`status ${response.status}`);
         }
-        return response;
+        return response.json();
       })
-      .then(response => response.text())
-      .then(response => setString(response))
+      .then(response => setString(response.message))
       .catch(e => {
         setMessage(`API call failed: ${e}`);
       })
