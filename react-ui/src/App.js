@@ -42,7 +42,7 @@ function App() {
             </p>
         } */}
         <Typist
-          sentences={['You only live once....', 'So why live for tomorrow?', 'Go buy ETH and relax Hasan!']}
+          sentences={['You only live once....', 'So why live for tomorrow?', 'Go buy ETH and relax Hasan! ❤️']}
           loop={!true}
           typingSpeed={60}
         />
