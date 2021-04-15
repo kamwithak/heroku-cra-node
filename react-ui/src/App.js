@@ -4,11 +4,11 @@ import './App.css';
 
 function App() {
   const [message, setMessage] = useState(null);
+  const [string, setString] = useState('-1');
   const [isFetching, setIsFetching] = useState(false);
-  const [url, setUrl] = useState('/api');
 
   const fetchData = useCallback(() => {
-    fetch(url)
+    fetch('/api')
       .then(response => {
         if (!response.ok) {
           throw new Error(`status ${response.status}`);
@@ -22,12 +22,28 @@ function App() {
         setMessage(`API call failed: ${e}`);
         setIsFetching(false);
       })
-  }, [url]);
+  }, ['/api']);
+
+  const fetchString = useCallback(() => {
+    fetch('/message')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`status ${response.status}`);
+        }
+        return response;
+      })
+      .then(response => response.text())
+      .then(response => setString(response))
+      .catch(e => {
+        setMessage(`API call failed: ${e}`);
+      })
+  }, ['/message']);
 
   useEffect(() => {
     setIsFetching(true);
     fetchData();
-  }, [fetchData]);
+    fetchString();
+  }, [fetchData, fetchString]);
 
   return (
     <div className="App">
@@ -60,6 +76,7 @@ function App() {
         >
           Learn React
         </a></p>
+        <p>{string}</p>
       </header>
     </div>
   );
